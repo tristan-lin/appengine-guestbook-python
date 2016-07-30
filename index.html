@@ -43,33 +43,70 @@
           </button>
           <a class="brand" href="#">App Engine Guestbook</a>
           <div class="nav-collapse collapse pull-right">
+            Login as
             <a href="{{ url|safe }}" class="btn">{{ url_linktext }}</a>
           </div>
         </div>
       </div>
     </div>
     <div class="container">
+      <!-- [START Input] -->
+      <form action="/sign?guestbook_name={{ guestbook_name }}" method="post">
+	<h3>Weekly: 
+	    {% if sum.week >=0 %}
+		{{"{0:,d}JPY".format(sum.week)}}
+	    {% else %}
+		<FONT color="red">{{"{0:,d}JPY".format(sum.week)}}</FONT>
+	    {% endif %}
+          , Today: 
+	    {% if sum.today >=0 %}
+		{{"{0:,d}JPY".format(sum.today)}}
+	    {% else %}
+		<FONT color="red">{{"{0:,d}JPY".format(sum.today)}}</FONT>
+	    {% endif %}
+          , Monthly Cost 
+	    {% if sum.month_cost >=0 %}
+		{{"{0:,d}JPY".format(sum.month_cost)}}
+	    {% else %}
+		<FONT color="red">{{"{0:,d}JPY".format(sum.month_cost)}}</FONT>
+	    {% endif %}
+	 </h3>
+      <label><h5>Amount (JPY)</h5><input type="number" name="amount"></label>
+      <label><h5>Date</h5><input type="date" name="date"></label>
+      <p>
+      <input type="checkbox" name="method" value="Cash">Cash</input>
+      <input type="checkbox" name="method" value="Credit">Credit Card</input>
+      <input type="checkbox" name="method" value="Coupon">Coupon</input>
+      </p>
+      <p>
+          <input type="radio" name="category" value="Restaurant">Restaurant </input>
+          <input type="radio" name="category" value="Grocery">Grocery </input>
+          <input type="radio" name="category" value="Household">Household </input>
+          <input type="radio" name="category" value="Shopping">Shopping </input>
+          <input type="radio" name="category" value="bb">bb </input>
+          <input type="radio" name="category" value="Sports">Sports </input>
+          <input type="radio" name="category" value="Traffic">Traffic </input>
+          <input type="radio" name="category" value="Medicine">Medicine </input>
+          <input type="radio" name="category" value="Gift">Gift </input>
+          <input type="radio" name="category" value="Other">Other </input>
+      </p>
+       <h5>Details: </h5>  
+        <div><textarea name="content" class="input-block-level" rows="1" cols=20></textarea></div>
+        <div><input type="submit" class="btn btn-large btn-primary" value="Update"></div>
+      </form>
+      <!-- [END Input] -->
       <!-- [START greetings] -->
       {% for greeting in greetings %}
       <div class="row">
         {% if greeting.author %}
-          <b>{{ greeting.author.email }}
-            {% if user and user.user_id() == greeting.author.identity %}
-              (You)
-            {% endif %}
-          </b> wrote:
-        {% else %}
-          An anonymous person wrote:
+              <b>{{ greeting.author.email }}</b>
+           wrote:
         {% endif %}
-        <blockquote>{{ greeting.content }}</blockquote>
+        <blockquote> {{ greeting.dateR }} Amount: <b>{{greeting.amount}}</b> JPY by {{greeting.method}} for {{greeting.category}}, Details: {{greeting.content}}</blockquote>
       </div>
       {% endfor %}
       <!-- [END greetings] -->
 
-      <form action="/sign?guestbook_name={{ guestbook_name }}" method="post">
-        <div><textarea name="content" class="input-block-level" rows="3"></textarea></div>
-        <div><input type="submit" class="btn btn-large btn-primary" value="Sign Guestbook"></div>
-      </form>
 
       <hr>
 
