@@ -1,10 +1,16 @@
-# Guestbook
+# Guestbook -> Bill Record
 
 Guestbook is an example application showing basic usage of Google App
 Engine. Users can read & write text messages and optionaly log-in with
 their Google account. Messages are stored in App Engine (NoSQL)
 High Replication Datastore (HRD) and retrieved using a strongly consistent
 (ancestor) query.
+
+And then I modified it to a bill record app. Restore your everyday expenses on
+datastore. I grantted 7000 JPY per day, so if overcomed this app will show a 
+red sum and remind me refrain to spend more money today. 
+
+
 
 ## Products
 - [App Engine][1]
